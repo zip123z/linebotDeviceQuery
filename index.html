@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>設備資訊查詢</title>
+    <title>設備資料查詢</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- bootstrap 4.3.1 -->
@@ -10,7 +10,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
         #MainDiv button {
             margin: 3px;
@@ -18,181 +18,34 @@
     </style>
     <script>
         //你的liff app ID, 例如 --> 0000000000-spPeRmAn
-        var YourLiffAppId = '2006561793-6pe12qR3';
+        var YourLiffAppId = '2006561793-0WpV8bq9';
 
         function initializeLiff(myLiffId) {
-    liff
-        .init({
-            liffId: myLiffId
-        })
-        .then(() => {
-            // 確認是否在 LINE App 中
-            if (!liff.isInClient()) {
-                alert("請在 LINE App 中開啟此應用！");
-                return;
-            }
+          liff.init({
+              liffId: YourLiffAppId
+              }).then(function() {
+                console.log('LIFF init');
+                $('#field_info').val('LIFF init');
+  
+           // 這邊開始寫使用其他功能
+  
+          }).catch(function(error) {
+            console.log(error);
+            $('#field_info').val(error);
+          });
 
-            // 初始化應用
-            initializeApp();
-
-            // 取得 QueryString
-            let urlParams = new URLSearchParams(window.location.search);
-            $('#QueryString').val(urlParams.toString() || "No QueryString Found");
-
-            // 顯示 UserId
-            liff.getProfile().then((profile) => {
-                $('#field_info').val(profile.userId);
-            }).catch((err) => {
-                alert(`無法取得用戶資訊：${JSON.stringify(err)}`);
-            });
-        })
-        .catch((err) => {
-            alert(`LIFF 初始化失敗：${JSON.stringify(err)}`);
-        });
 }
 
         $(document).ready(function () {
 
-
-            $('#FlexMessageContentObject').val(`
-{
-  "type": "bubble",
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "image",
-        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip3.jpg",
-        "size": "full",
-        "aspectMode": "cover",
-        "aspectRatio": "1:1",
-        "gravity": "center"
-      },
-      {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [],
-        "position": "absolute",
-        "background": {
-          "type": "linearGradient",
-          "angle": "0deg",
-          "endColor": "#00000000",
-          "startColor": "#00000099"
-        },
-        "width": "100%",
-        "height": "40%",
-        "offsetBottom": "0px",
-        "offsetStart": "0px",
-        "offsetEnd": "0px"
-      },
-      {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "Brown Grand Hotel",
-                    "size": "xl",
-                    "color": "#ffffff"
-                  }
-                ]
-              },
-              {
-                "type": "box",
-                "layout": "baseline",
-                "contents": [
-                  {
-                    "type": "icon",
-                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                  },
-                  {
-                    "type": "icon",
-                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                  },
-                  {
-                    "type": "icon",
-                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                  },
-                  {
-                    "type": "icon",
-                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-                  },
-                  {
-                    "type": "icon",
-                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
-                  },
-                  {
-                    "type": "text",
-                    "text": "4.0",
-                    "color": "#a9a9a9"
-                  }
-                ],
-                "spacing": "xs"
-              },
-              {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                  {
-                    "type": "box",
-                    "layout": "baseline",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "¥62,000",
-                        "color": "#ffffff",
-                        "size": "md",
-                        "flex": 0,
-                        "align": "end"
-                      },
-                      {
-                        "type": "text",
-                        "text": "¥82,000",
-                        "color": "#a9a9a9",
-                        "decoration": "line-through",
-                        "size": "sm",
-                        "align": "end"
-                      }
-                    ],
-                    "flex": 0,
-                    "spacing": "lg"
-                  }
-                ]
-              }
-            ],
-            "spacing": "xs"
-          }
-        ],
-        "position": "absolute",
-        "offsetBottom": "0px",
-        "offsetStart": "0px",
-        "offsetEnd": "0px",
-        "paddingAll": "20px"
-      }
-    ],
-    "paddingAll": "0px"
-  }
-}
-`);
-
             //init LIFF
             initializeLiff(YourLiffAppId);
 
-            $('#ButtonScan').click(() => {
+            $('#ButtonScanV2').click(() => {
               if (!liff.isInClient()) {
                 alert("請在 LINE App 中啟動此應用，QR Code 掃描功能無法在瀏覽器中使用！");
                 return;
               }
-
               
                liff.scanCodeV2().then((ret) => {
                     //alert(JSON.stringify(ret));
@@ -214,7 +67,7 @@
             });
 
             //ButtonGetProfile
-            $('#ButtonGetProfile').click(() => {
+            $('#ButtonGetProfile_displayName').click(() => {
                 //取得User Proile
                 liff.getProfile().then(
                     (profile) => {
@@ -270,10 +123,32 @@
     <div class="row">
         <div id="MainDiv" class="col-md-6" style="margin:5px">
             <label>請輸入設備編號:</label>
+            <input class="form-control" type="text" /><br />
+            <button class="btn btn-primary" >查詢</button>
+            <button class="btn btn-primary" id="ButtonScanV2">掃描 QR Code V2</button>
+            <hr><hr />
+            <hr><hr />
+            <hr><hr />
+            <hr><hr />
+            <hr><hr />
+            <label>QueryString:</label>
             <input class="form-control" type="text" id="QueryString" /><br />
-            <button class="btn btn-primary" id="ButtonGetOS">查詢</button>
-            <button class="btn btn-primary" id="ButtonScanV2">掃描 QR Code</button>
+            <label>info:</label>
             <textarea class="form-control" rows="3" type="text" id="field_info"></textarea>   <br />
+            <button class="btn btn-primary" id="ButtonGetOS">Get OS info</button>
+            <button class="btn btn-primary" id="ButtonGetLanguage">Get Language</button>
+            <button class="btn btn-primary" id="ButtonGetProfile_displayName">profile.displayName</button>
+            <hr />
+            <label>要傳送的訊息:</label>
+            <input class="form-control" type="text" id="msg" value="測試文字" /><br />
+            <button class="btn btn-primary" id="ButtonSendMsg">要傳送的訊息</button>
+            <hr />
+            <label>要以ShareTargetPicker傳送的Flex訊息:</label>
+            <input class="form-control" type="text" id="FlexMessageContentAltText" value="Flex圖文訊息" /><br />
+            <textarea class="form-control" type="text" id="FlexMessageContentObject" value="可使用Flex Message sim產生的訊息" cols="40" rows="5"></textarea><br />
+            <button class="btn btn-primary" id="ButtonSendshareTargetPickerMsg">Share Target Picker</button>
+            <hr />
         </div>
+    </div>
 </body>
 </html>
